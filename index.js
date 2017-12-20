@@ -1,4 +1,4 @@
-PermissionTree = require('./src/PermissionTree');
+const PermissionTree = require('./src/PermissionTree');
 
 module.exports = function(app) {
     const permissionTree = new PermissionTree(app.models, app.remotes())
