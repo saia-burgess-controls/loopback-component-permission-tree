@@ -20,7 +20,7 @@
     "permission",
     "permission-tree"
   ],
-  "author": "",
+  "author": "Lorenzo Kappeler",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/joinbox/loopback-component-permission-tree/issues"

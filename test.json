@@ -1,0 +1,58 @@
+{
+  "ids": {
+    "User": 3,
+    "AccessToken": 1,
+    "ACL": 3,
+    "RoleMapping": 3,
+    "Role": 3,
+    "Book": 6,
+    "Page": 1,
+    "Author": 5,
+    "AuthorBook": 3,
+    "Publisher": 6
+  },
+  "models": {
+    "User": {
+      "1": "{\"username\":\"admin\",\"password\":\"$2a$10$oqUDHuvIs0.AVrKIN8BDD.y8VfDhASw13iNZNOPXR1zGxpUG.qMfC\",\"email\":\"admin@admin.tld\",\"emailVerified\":true,\"id\":1}",
+      "2": "{\"username\":\"reader\",\"password\":\"$2a$10$M.0ns8ETIsIUQGq.lMeE1ucPlh.47KEXsruDkagdz2og/W0zEsPEe\",\"email\":\"reader@reader.tld\",\"emailVerified\":true,\"id\":2}"
+    },
+    "AccessToken": {},
+    "ACL": {
+      "1": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":1}",
+      "2": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"READ\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"reader\",\"id\":2}"
+    },
+    "RoleMapping": {
+      "1": "{\"principalType\":\"USER\",\"principalId\":\"1\",\"roleId\":1,\"id\":1}",
+      "2": "{\"principalType\":\"USER\",\"principalId\":\"2\",\"roleId\":2,\"id\":2}"
+    },
+    "Role": {
+      "1": "{\"name\":\"admin\",\"created\":\"2017-12-20T14:31:09.195Z\",\"modified\":\"2017-12-20T14:31:09.195Z\",\"id\":1}",
+      "2": "{\"name\":\"reader\",\"created\":\"2017-12-20T14:31:09.196Z\",\"modified\":\"2017-12-20T14:31:09.196Z\",\"id\":2}"
+    },
+    "Book": {
+      "1": "{\"title\":\"The great gatsby\",\"id\":1}",
+      "2": "{\"title\":\"The hunger games\",\"id\":2}",
+      "3": "{\"title\":\"Harry Potter\",\"id\":3}",
+      "4": "{\"title\":\"1984\",\"id\":4}",
+      "5": "{\"title\":\"Animal Farm\",\"id\":5}"
+    },
+    "Page": {},
+    "Author": {
+      "1": "{\"firstName\":\"Scott\",\"lastName\":\"Fitzgerald\",\"id\":1}",
+      "2": "{\"firstName\":\"Suzanne\",\"lastName\":\"Collins\",\"id\":2}",
+      "3": "{\"firstName\":\"Joanne\",\"lastName\":\"Rowling\",\"id\":3}",
+      "4": "{\"firstName\":\"George\",\"lastName\":\"Orwell\",\"id\":4}"
+    },
+    "AuthorBook": {
+      "1": "{\"authorId\":4,\"bookId\":4,\"id\":1}",
+      "2": "{\"authorId\":4,\"bookId\":5,\"id\":2}"
+    },
+    "Publisher": {
+      "1": "{\"name\":\"Scribner\",\"id\":1}",
+      "2": "{\"name\":\"Scholastic Press\",\"id\":2}",
+      "3": "{\"name\":\"Scholastic Inc.\",\"id\":3}",
+      "4": "{\"name\":\"New American Library\",\"id\":4}",
+      "5": "{\"name\":\"NAL\",\"id\":5}"
+    }
+  }
+}

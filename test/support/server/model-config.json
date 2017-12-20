@@ -33,13 +33,13 @@
       "public": false
     },
     "Book": {
-        "dataSource": "db",
+        "dataSource": "db"
     },
     "Page": {
         "dataSource": "db"
     },
     "Author": {
-        "dataSource": "db",
+        "dataSource": "db"
     },
     "Publisher": {
         "dataSource": "db"
