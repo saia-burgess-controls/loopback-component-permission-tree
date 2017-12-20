@@ -24,7 +24,6 @@ class DataCreator {
     }
 
     async createAcls() {
-        console.log('this', this);
         return DataCreator.createData(this.ACL, aclData);
     }
 
@@ -42,7 +41,6 @@ class DataCreator {
 }
 
 module.exports = function(models) {
-    console.log('models', models);
     const creator = new DataCreator(models);
     return creator.createAndLinkData();
 };

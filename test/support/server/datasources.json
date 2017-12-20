@@ -1,6 +1,5 @@
 {
     "db": {
-      "connector": "memory",
-      "file": "test.json"
+      "connector": "memory"
     }
 }

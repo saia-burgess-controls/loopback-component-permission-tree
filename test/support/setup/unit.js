@@ -11,6 +11,5 @@ before('boot microservice', async function() {
     };
 
     this.service = await Microservice.boot(options);
-    const data = await createData(this.service.app.models);
-    console.log('data', data);
+    await createData(this.service.app.models);
 });
