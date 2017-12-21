@@ -22,13 +22,16 @@ module.exports = class PermissionTree {
         * @type {Array}
         */
         this.ACCESS_TYPES = ['READ', 'REPLICATE', 'WRITE', 'EXECUTE'];
+
+        /**
+         * The current loopback user
+         * @type {Object}
+         */
+        this.currenUser = null;
     }
 
-    buildDefaultTree() {
-        if (this.defaultTree) {
-            return this.defaultTree;
-        }
-        const defaultTree = [];
+    _buildDefaultTree() {
+        const defaultTree = {};
 
         Object.values(this.models).forEach((model) => {
             if (model.shared) {
@@ -48,5 +51,69 @@ module.exports = class PermissionTree {
 
         this.defaultTree = defaultTree;
         return this.defaultTree;
+    }
+
+    getDefaultTree() {
+        if (this.defaultTree) {
+            return this.defaultTree;
+        }
+
+        return this._buildDefaultTree();
+    }
+
+
+    buildACLQueries(roleName) {
+        const promises = [];
+        const defaultTree = this.getDefaultTree();
+
+        Object.keys(defaultTree).forEach((modelName) => {
+            Object.keys(defaultTree[modelName]).forEach((remoteMethod) => {
+                Object.keys(defaultTree[modelName][remoteMethod]).forEach((accessType) => {
+                    promises.push(new Promise((resolve, reject) => {
+                        this.models.ACL.checkPermission(
+                            this.models.RoleMapping.ROLE,
+                            roleName,
+                            modelName,
+                            remoteMethod,
+                            accessType,
+                            (err, accessRequest) => {
+                                if (err) reject(err);
+
+                                resolve(accessRequest);
+                            },
+                        );
+                    }));
+                });
+            });
+        });
+
+        return promises;
+    }
+
+    async getACLPermissionsForRole(role) {
+        return Promise.all(this.buildACLQueries(role));
+    }
+
+    async createPermissionTreeForCurrentUser() {
+        console.log('this.currentUser', this.currentUser);
+        console.log('userGroups', this.currentUser.userGroups);
+
+        if (!this.currentUser || !this.currentUser.userGroups) {
+            throw new Error('No user was specified while trying to load permission tree!');
+        }
+
+        this.currentUser.userGroups.forEach(async(role) => {
+            const accessRequests = await this.getACLPermissionsForRole(role);
+
+            console.log('accessRequests', accessRequests);
+        });
+    }
+
+    setCurrentUser(user) {
+        this.currentUser = user;
+    }
+
+    getCurrentUser() {
+        return this.currentUser;
     }
 };
