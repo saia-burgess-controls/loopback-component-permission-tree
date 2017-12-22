@@ -9,6 +9,18 @@ describe('PermissionTree Class Test', () => {
         );
     });
 
+    const getPermissionTree = async(credentials) => {
+        console.log('this', this);
+        const tokenRequest = await this.service.api.post('/users/login', credentials);
+        const accessToken = tokenRequest.body.id;
+
+        return this.service.api.request
+            .get('http://localhost:3000/getUserPermissionTree')
+            .set('Authorization', accessToken);
+
+    }
+
+    // TODO: mode to unit test
     it('Should get the default Tree', function() {
         const defaultTree = this.permissionTree.getDefaultTree();
 
@@ -16,25 +28,26 @@ describe('PermissionTree Class Test', () => {
     });
 
 
-    it('Should load the current User and its roles', async function() {
+    it('Should load the current User and its roles for User:admin', async function() {
         const tokenRequest = await this.service.api.post('/users/login', {
             email: 'admin@admin.tld',
             password: 'admin',
         });
         const accessToken = tokenRequest.body.id;
 
-        try {
 
-        const foo = await this.service.api.request
+        const permissions = await this.service.api.request
             .get('http://localhost:3000/getUserPermissionTree')
             .set('Authorization', accessToken);
 
-            console.log('fin');
+        /*
+        const permissions = await getPermissionTree({
+            email: 'admin@admin.tld',
+            password: 'admin',
+        });
+        */
 
-        } catch (e) {
-            console.log('e', e);
-        }
-
-
+        expect(permissions.body).to.be.an('Object').with.keys(['Author', 'Book', 'Page', 'Publisher', 'User']);
+        expect(permissions.body.Author.find.WRITE).to.equals(true);
     });
 });
