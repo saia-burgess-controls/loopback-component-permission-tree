@@ -31,18 +31,18 @@ describe('PermissionTree Class Test', () => {
             password: 'admin',
         });
 
+        console.log('permissions.body', permissions.body);
+
         expect(permissions.body).to.be.an('Object').with.keys(['Author', 'Book', 'Page', 'Publisher', 'User']);
         expect(permissions.body.Author.find.WRITE).to.equals(true);
     });
 
-    it('Should load the current User and its roles for User:reader', async function() {
+    it.only('Should load the current User and its roles for User:reader', async function() {
         const permissions = await getPermissionTree(this.service, {
             email: 'reader@reader.tld',
             password: 'reader',
         });
 
-
-        console.log('permissions.body.Author', permissions.body.Author);
         expect(permissions.body).to.be.an('Object').with.keys(['Author', 'Book', 'Page', 'Publisher', 'User']);
         expect(permissions.body.Author.find.WRITE).to.equals(false);
     });

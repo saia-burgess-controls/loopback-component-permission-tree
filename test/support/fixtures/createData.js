@@ -11,7 +11,8 @@ class DataCreator {
     }
 
     async createAndLinkData() {
-        await this.createAcls();
+        const acls = await this.createAcls();
+        console.log('acls', acls);
         const users = await this.createUsers();
         const roles = await this.createRoles();
 

@@ -144,6 +144,7 @@ module.exports = class PermissionTree {
         accessRequest.accessType === 'WRITE') {
                     console.log('accessRequest', accessRequest);
                     console.log('this.currentUser', this.currentUser);
+                    console.log('isAllowed', accessRequest.isAllowed());
                 }
 
                 this.setPermission(
