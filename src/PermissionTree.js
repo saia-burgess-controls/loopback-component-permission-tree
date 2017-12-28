@@ -28,6 +28,12 @@ module.exports = class PermissionTree {
          * @type {Object}
          */
         this.currenUser = null;
+
+        /**
+         * Object to hold the builded user permission trees
+         * @type {Object}
+         */
+        this.userPermissionTrees = {}
     }
 
     _buildDefaultTree() {
@@ -63,13 +69,18 @@ module.exports = class PermissionTree {
 
 
     getUserPermissionTree() {
-        if (this.userPermissionTree) {
-            return this.userPermissionTree;
+        if (!this.currentUser) {
+            throw new Error('No user was specified while trying to access the users permission tree!');
+        }
+        const userId = this.currentUser.id;
+
+        if (!this.userPermissionTrees[userId]) {
+            // Deep clone
+            this.userPermissionTrees[userId] = JSON.parse(JSON.stringify(this.getDefaultTree()));
+            return this.userPermissionTrees[userId];
         }
 
-        // Deep clone
-        this.userPermissionTree = JSON.parse(JSON.stringify(this.getDefaultTree()));
-        return this.userPermissionTree;
+        return this.userPermissionTrees[userId];
     }
 
 
@@ -128,6 +139,13 @@ module.exports = class PermissionTree {
                 ) &&
                 accessRequest.isAllowed()
             ) {
+                if (accessRequest.model === 'Author' &&
+            accessRequest.property === 'create' &&
+        accessRequest.accessType === 'WRITE') {
+                    console.log('accessRequest', accessRequest);
+                    console.log('this.currentUser', this.currentUser);
+                }
+
                 this.setPermission(
                     accessRequest.model,
                     accessRequest.property,

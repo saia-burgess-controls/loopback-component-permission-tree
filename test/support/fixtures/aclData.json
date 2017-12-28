@@ -3,6 +3,14 @@
         "model": "Author",
         "property": "*",
         "accessType": "*",
+        "permission": "DENY",
+        "principalType": "ROLE",
+        "principalId": "$everyone"
+    },
+    {
+        "model": "Author",
+        "property": "*",
+        "accessType": "*",
         "permission": "ALLOW",
         "principalType": "ROLE",
         "principalId": "admin"
