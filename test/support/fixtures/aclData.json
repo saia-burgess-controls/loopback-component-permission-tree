@@ -11,16 +11,24 @@
         "model": "Author",
         "property": "*",
         "accessType": "*",
-        "permission": "ALLOW",
+        "permission": "DENY",
         "principalType": "ROLE",
-        "principalId": "admin"
+        "principalId": "$authenticated"
     },
     {
         "model": "Author",
         "property": "*",
-        "accessType": "READ",
+        "accessType": "*",
         "permission": "ALLOW",
         "principalType": "ROLE",
-        "principalId": "reader"
+        "principalId": 1
+    },
+    {
+        "model": "Author",
+        "property": "*",
+        "accessType": "WRITE",
+        "permission": "DENY",
+        "principalType": "ROLE",
+        "principalId": 2
     }
 ]

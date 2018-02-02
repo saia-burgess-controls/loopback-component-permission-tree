@@ -1,0 +1,79 @@
+{
+  "ids": {
+    "User": 3,
+    "AccessToken": 3,
+    "ACL": 5,
+    "RoleMapping": 3,
+    "Role": 3,
+    "Book": 11,
+    "Page": 1,
+    "Author": 9,
+    "AuthorBook": 5,
+    "Publisher": 11
+  },
+  "models": {
+    "User": {
+      "1": "{\"username\":\"admin\",\"password\":\"$2a$10$2/kFsFCcvXWIMFvMo3juI.0.HCUzqnK2m8VMa5kr7ypZJH035b7am\",\"email\":\"admin@admin.tld\",\"emailVerified\":true,\"id\":1}",
+      "2": "{\"username\":\"reader\",\"password\":\"$2a$10$IEhAsHZ1jyNanMJ7mdFx5.gJZJ7yQNZJ7jpZlH0PnkMcpsKExx40.\",\"email\":\"reader@reader.tld\",\"emailVerified\":true,\"id\":2}"
+    },
+    "AccessToken": {
+      "hJkaEnKoUraJv7Qjkmy1NPAwHjMBJFfV4FdiZU6L5lsuUFCzuH5Qnn90rvFf9EQN": "{\"id\":\"hJkaEnKoUraJv7Qjkmy1NPAwHjMBJFfV4FdiZU6L5lsuUFCzuH5Qnn90rvFf9EQN\",\"ttl\":1209600,\"created\":\"2018-02-02T14:10:07.803Z\",\"userId\":2}",
+      "MxxCvb5SozZtEE1GLCUEq6nvwwTRcvbhxZk1FU2s4niCGT5pXzPTxdGbXAZLBRi1": "{\"id\":\"MxxCvb5SozZtEE1GLCUEq6nvwwTRcvbhxZk1FU2s4niCGT5pXzPTxdGbXAZLBRi1\",\"ttl\":1209600,\"created\":\"2018-02-02T14:10:22.007Z\",\"userId\":2}"
+    },
+    "ACL": {
+      "1": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"$everyone\",\"id\":1}",
+      "2": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"$authenticated\",\"id\":2}",
+      "3": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":3}",
+      "4": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"reader\",\"id\":4}"
+    },
+    "RoleMapping": {
+      "1": "{\"principalType\":\"USER\",\"principalId\":\"1\",\"roleId\":1,\"id\":1}",
+      "2": "{\"principalType\":\"USER\",\"principalId\":\"2\",\"roleId\":2,\"id\":2}"
+    },
+    "Role": {
+      "1": "{\"name\":\"admin\",\"created\":\"2018-02-02T14:10:07.519Z\",\"modified\":\"2018-02-02T14:10:07.519Z\",\"id\":1}",
+      "2": "{\"name\":\"reader\",\"created\":\"2018-02-02T14:10:07.519Z\",\"modified\":\"2018-02-02T14:10:07.519Z\",\"id\":2}"
+    },
+    "Book": {
+      "1": "{\"title\":\"The great gatsby\",\"id\":1}",
+      "2": "{\"title\":\"The hunger games\",\"id\":2}",
+      "3": "{\"title\":\"Harry Potter\",\"id\":3}",
+      "4": "{\"title\":\"1984\",\"id\":4}",
+      "5": "{\"title\":\"Animal Farm\",\"id\":5}",
+      "6": "{\"title\":\"The great gatsby\",\"id\":6}",
+      "7": "{\"title\":\"The hunger games\",\"id\":7}",
+      "8": "{\"title\":\"Harry Potter\",\"id\":8}",
+      "9": "{\"title\":\"1984\",\"id\":9}",
+      "10": "{\"title\":\"Animal Farm\",\"id\":10}"
+    },
+    "Page": {},
+    "Author": {
+      "1": "{\"firstName\":\"Scott\",\"lastName\":\"Fitzgerald\",\"id\":1}",
+      "2": "{\"firstName\":\"Suzanne\",\"lastName\":\"Collins\",\"id\":2}",
+      "3": "{\"firstName\":\"Joanne\",\"lastName\":\"Rowling\",\"id\":3}",
+      "4": "{\"firstName\":\"George\",\"lastName\":\"Orwell\",\"id\":4}",
+      "5": "{\"firstName\":\"Scott\",\"lastName\":\"Fitzgerald\",\"id\":5}",
+      "6": "{\"firstName\":\"Suzanne\",\"lastName\":\"Collins\",\"id\":6}",
+      "7": "{\"firstName\":\"Joanne\",\"lastName\":\"Rowling\",\"id\":7}",
+      "8": "{\"firstName\":\"George\",\"lastName\":\"Orwell\",\"id\":8}"
+    },
+    "AuthorBook": {
+      "1": "{\"authorId\":4,\"bookId\":4,\"id\":1}",
+      "2": "{\"authorId\":4,\"bookId\":5,\"id\":2}",
+      "3": "{\"authorId\":8,\"bookId\":9,\"id\":3}",
+      "4": "{\"authorId\":8,\"bookId\":10,\"id\":4}"
+    },
+    "Publisher": {
+      "1": "{\"name\":\"Scribner\",\"id\":1}",
+      "2": "{\"name\":\"Scholastic Press\",\"id\":2}",
+      "3": "{\"name\":\"Scholastic Inc.\",\"id\":3}",
+      "4": "{\"name\":\"New American Library\",\"id\":4}",
+      "5": "{\"name\":\"NAL\",\"id\":5}",
+      "6": "{\"name\":\"Scribner\",\"id\":6}",
+      "7": "{\"name\":\"Scholastic Press\",\"id\":7}",
+      "8": "{\"name\":\"Scholastic Inc.\",\"id\":8}",
+      "9": "{\"name\":\"New American Library\",\"id\":9}",
+      "10": "{\"name\":\"NAL\",\"id\":10}"
+    }
+  }
+}

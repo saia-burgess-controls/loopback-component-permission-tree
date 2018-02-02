@@ -1,8 +1,8 @@
 {
   "ids": {
     "User": 3,
-    "AccessToken": 3,
-    "ACL": 4,
+    "AccessToken": 2,
+    "ACL": 5,
     "RoleMapping": 3,
     "Role": 3,
     "Book": 6,
@@ -13,25 +13,25 @@
   },
   "models": {
     "User": {
-      "1": "{\"username\":\"admin\",\"password\":\"$2a$10$SAnzMq/xTt.qGOwt9t7EOedSlsTVW/HRPk.lxWtENhylDovRsmSEy\",\"email\":\"admin@admin.tld\",\"emailVerified\":true,\"id\":1}",
-      "2": "{\"username\":\"reader\",\"password\":\"$2a$10$kaTicnUS4weV7P3NgnZ7R.gt.qweQRJQwcvxGL02KmBsR/LpeCPXy\",\"email\":\"reader@reader.tld\",\"emailVerified\":true,\"id\":2}"
+      "1": "{\"username\":\"admin\",\"password\":\"$2a$10$1HzfuJn4PiMzLJ7debaOpeIEaIh7qAhfuAUfQ2p5kYZ.W3q.lLNxq\",\"email\":\"admin@admin.tld\",\"emailVerified\":true,\"id\":1}",
+      "2": "{\"username\":\"reader\",\"password\":\"$2a$10$SOpnsXj2jjMtG3gZm0WFVelpwmAQrCErxrlYmm.T5Vv3OFTwKS2V.\",\"email\":\"reader@reader.tld\",\"emailVerified\":true,\"id\":2}"
     },
     "AccessToken": {
-      "pYSuAC4JvYo00Hp5B0Suz2KU1cKLKKLUXyoUTmwlX0mqJByatoi36HstT6XDgMDB": "{\"id\":\"pYSuAC4JvYo00Hp5B0Suz2KU1cKLKKLUXyoUTmwlX0mqJByatoi36HstT6XDgMDB\",\"ttl\":1209600,\"created\":\"2017-12-28T13:32:51.063Z\",\"userId\":1}",
-      "BDqtCGAc0jFkBCz351kCNeSh3A2rzMQzMKFfuHlaACpCn0ngV96pKTSf3IdjJhCk": "{\"id\":\"BDqtCGAc0jFkBCz351kCNeSh3A2rzMQzMKFfuHlaACpCn0ngV96pKTSf3IdjJhCk\",\"ttl\":1209600,\"created\":\"2017-12-28T13:32:51.285Z\",\"userId\":2}"
+      "NYoS3kMBmb9gszHzYDVrZFJPJF5f9vzoSUUpWwJCI0HUa7x0ZzHxLErb9Au6BQqz": "{\"id\":\"NYoS3kMBmb9gszHzYDVrZFJPJF5f9vzoSUUpWwJCI0HUa7x0ZzHxLErb9Au6BQqz\",\"ttl\":1209600,\"created\":\"2018-02-02T14:15:08.045Z\",\"userId\":2}"
     },
     "ACL": {
       "1": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"$everyone\",\"id\":1}",
-      "2": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"1\",\"id\":2}",
-      "3": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"READ\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"2\",\"id\":3}"
+      "2": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"$authenticated\",\"id\":2}",
+      "3": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"1\",\"id\":3}",
+      "4": "{\"model\":\"Author\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"DENY\",\"principalType\":\"ROLE\",\"principalId\":\"2\",\"id\":4}"
     },
     "RoleMapping": {
       "1": "{\"principalType\":\"USER\",\"principalId\":\"1\",\"roleId\":1,\"id\":1}",
       "2": "{\"principalType\":\"USER\",\"principalId\":\"2\",\"roleId\":2,\"id\":2}"
     },
     "Role": {
-      "1": "{\"name\":\"admin\",\"created\":\"2017-12-28T13:32:50.953Z\",\"modified\":\"2017-12-28T13:32:50.953Z\",\"id\":1}",
-      "2": "{\"name\":\"reader\",\"created\":\"2017-12-28T13:32:50.953Z\",\"modified\":\"2017-12-28T13:32:50.953Z\",\"id\":2}"
+      "1": "{\"name\":\"admin\",\"created\":\"2018-02-02T14:15:07.764Z\",\"modified\":\"2018-02-02T14:15:07.764Z\",\"id\":1}",
+      "2": "{\"name\":\"reader\",\"created\":\"2018-02-02T14:15:07.764Z\",\"modified\":\"2018-02-02T14:15:07.764Z\",\"id\":2}"
     },
     "Book": {
       "1": "{\"title\":\"The great gatsby\",\"id\":1}",
