@@ -24,16 +24,10 @@ module.exports = class PermissionTree {
         this.ACCESS_TYPES = ['READ', 'REPLICATE', 'WRITE', 'EXECUTE'];
 
         /**
-         * The current loopback user
-         * @type {Object}
-         */
-        this.currenUser = null;
-
-        /**
          * Object to hold the builded user permission trees
          * @type {Object}
          */
-        this.userPermissionTrees = {}
+        this.userPermissionTrees = new Map();
     }
 
     _buildDefaultTree() {
@@ -68,19 +62,21 @@ module.exports = class PermissionTree {
     }
 
 
-    getUserPermissionTree() {
-        if (!this.currentUser) {
+    getUserPermissionTree(user) {
+        if (!user) {
             throw new Error('No user was specified while trying to access the users permission tree!');
         }
-        const userId = this.currentUser.id;
 
-        if (!this.userPermissionTrees[userId]) {
+        if (!this.userPermissionTrees.has(user.id)) {
             // Deep clone
-            this.userPermissionTrees[userId] = JSON.parse(JSON.stringify(this.getDefaultTree()));
-            return this.userPermissionTrees[userId];
+            this.setUserPermissionTree(user, JSON.parse(JSON.stringify(this.getDefaultTree())));
         }
 
-        return this.userPermissionTrees[userId];
+        return this.userPermissionTrees.get(user.id);
+    }
+
+    setUserPermissionTree(user, tree) {
+        this.userPermissionTrees.set(user.id, tree);
     }
 
 
@@ -117,65 +113,55 @@ module.exports = class PermissionTree {
         return Promise.all(this.buildACLQueries(role));
     }
 
-    async createPermissionTreeForCurrentUser() {
-        if (!this.currentUser || !this.currentUser.userGroups) {
+    async createPermissionTree(user) {
+        if (!user || !user.userGroups) {
             throw new Error('No user was specified while trying to load permission tree!');
         }
 
         // Note: Roles are passed as user groups (RoleMapping.GROUP)
-        await Promise.all(this.currentUser.userGroups.map(async(group) => {
+        await Promise.all(user.userGroups.map(async(group) => {
             const accessRequests = await this.getACLPermissionsForRole(group);
 
-            this.updatePermissions(accessRequests);
+            this.updatePermissions(user, accessRequests);
         }));
     }
 
-    updatePermissions(accessRequests) {
+    updatePermissions(user, accessRequests) {
         accessRequests.forEach((accessRequest) => {
             if (
                 !this.getPermission(
-                    accessRequest.model,
-                    accessRequest.property,
-                    accessRequest.accessType
+                    user,
+                    accessRequest
                 ) &&
                 accessRequest.isAllowed()
             ) {
                 this.setPermission(
-                    accessRequest.model,
-                    accessRequest.property,
-                    accessRequest.accessType,
+                    user,
+                    accessRequest,
                     true
                 );
             }
         });
     }
 
-    getPermission(modelName, remoteMethod, accessType) {
-        const userTree = this.getUserPermissionTree();
+    getPermission(user, accessRequest) {
+        const userTree = this.getUserPermissionTree(user);
 
-        return userTree[modelName][remoteMethod][accessType];
+        return userTree[accessRequest.model][accessRequest.property][accessRequest.accessType];
     }
 
-    setPermission(modelName, remoteMethod, accessType, allow = true) {
-        const userTree = this.getUserPermissionTree();
+    setPermission(user, accessRequest, allow = true) {
+        const userTree = this.getUserPermissionTree(user);
 
-        userTree[modelName][remoteMethod][accessType] = allow;
+        userTree[accessRequest.model][accessRequest.property][accessRequest.accessType] = allow;
+
+        this.setUserPermissionTree(user, userTree);
     }
 
-    setCurrentUser(user) {
-        this.currentUser = user;
-    }
-
-    getCurrentUser() {
-        return this.currentUser;
-    }
-
-    // FIXME: pass user trough asyn tree
     async getPermissionsForUser(user) {
-        this.setCurrentUser(user);
-        await this.createPermissionTreeForCurrentUser();
+        await this.createPermissionTree(user);
 
-        return this.getUserPermissionTree();
+        return this.getUserPermissionTree(user);
     }
 
 };
