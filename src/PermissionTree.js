@@ -85,7 +85,6 @@ module.exports = class PermissionTree {
 
 
     buildACLQueries(roleName) {
-        console.log('roleName', roleName);
         const promises = [];
         const defaultTree = this.getDefaultTree();
 
@@ -127,19 +126,11 @@ module.exports = class PermissionTree {
         await Promise.all(this.currentUser.userGroups.map(async(group) => {
             const accessRequests = await this.getACLPermissionsForRole(group);
 
-            console.log('group', group);
             this.updatePermissions(accessRequests);
         }));
-
-        console.log('this.currentUser.userGroups.map DONE');
     }
 
     updatePermissions(accessRequests) {
-        console.log('#########################');
-        console.log('updatePermissions called');
-        console.log('#########################');
-
-
         accessRequests.forEach((accessRequest) => {
             if (
                 !this.getPermission(
@@ -149,13 +140,6 @@ module.exports = class PermissionTree {
                 ) &&
                 accessRequest.isAllowed()
             ) {
-                if (accessRequest.model === 'Author' &&
-            accessRequest.property === 'create' &&
-        accessRequest.accessType === 'WRITE') {
-                    console.log('this.currentUser', this.currentUser);
-                    console.log('isAllowed', accessRequest.isAllowed());
-                }
-
                 this.setPermission(
                     accessRequest.model,
                     accessRequest.property,
@@ -169,28 +153,11 @@ module.exports = class PermissionTree {
     getPermission(modelName, remoteMethod, accessType) {
         const userTree = this.getUserPermissionTree();
 
-        if (modelName === 'Author' &&
-    remoteMethod=== 'find' &&
-    accessType === 'WRITE') {
-            console.log('getMETOD called');
-            console.log('userTree[modelName][remoteMethod][accessType]', userTree[modelName][remoteMethod][accessType]);
-        }
-
         return userTree[modelName][remoteMethod][accessType];
     }
 
     setPermission(modelName, remoteMethod, accessType, allow = true) {
         const userTree = this.getUserPermissionTree();
-
-        if (modelName === 'Author' &&
-    remoteMethod=== 'find' &&
-    accessType === 'WRITE') {
-            console.log('modelName', modelName);
-            console.log('remoteMethod', remoteMethod);
-            console.log('accessType', accessType);
-            console.log('allow', allow);
-        }
-
 
         userTree[modelName][remoteMethod][accessType] = allow;
     }
@@ -207,7 +174,6 @@ module.exports = class PermissionTree {
     async getPermissionsForUser(user) {
         this.setCurrentUser(user);
         await this.createPermissionTreeForCurrentUser();
-        console.log('awaited creat permission for user');
 
         return this.getUserPermissionTree();
     }

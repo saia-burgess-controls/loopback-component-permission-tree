@@ -1,13 +1,6 @@
 const { expect } = require('chai');
 
 describe('PermissionTree Integration Test', () => {
-
-    before('Reboot the service',async function() {
-        await this.service.stop();
-        this.service = await this.service.start();
-    });
-
-
     const getPermissionTree = async(service, credentials) => {
         const tokenRequest = await service.api.post('/users/login', credentials);
         const accessToken = tokenRequest.body.id;
@@ -24,6 +17,7 @@ describe('PermissionTree Integration Test', () => {
         });
 
         expect(permissions.body).to.be.an('Object').with.keys(['Author', 'Book', 'Page', 'Publisher', 'User']);
+        expect(permissions.body.Author.find.READ).to.equals(true);
         expect(permissions.body.Author.find.WRITE).to.equals(true);
     });
 
@@ -34,8 +28,8 @@ describe('PermissionTree Integration Test', () => {
             password: 'reader',
         });
 
-            console.log('permissions.body.Author', permissions.body.Author);
         expect(permissions.body).to.be.an('Object').with.keys(['Author', 'Book', 'Page', 'Publisher', 'User']);
+        expect(permissions.body.Author.find.READ).to.equals(true);
         expect(permissions.body.Author.find.WRITE).to.equals(false);
     });
 });
