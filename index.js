@@ -17,6 +17,8 @@ module.exports = function(app, optionsToMerge) {
                         Error: 'Unauthorized',
                         Message: 'You need to be authenticated to access this endpoint',
                     });
+
+                    return;
                 }
 
                 resolve(app.models.User.findById(accesstoken.userId));
@@ -40,6 +42,8 @@ module.exports = function(app, optionsToMerge) {
                     .send(userPermissions);
             })
             .catch((error) => {
+                console.log('error.message', error.message);
+
                 res.status(500);
                 res.send({
                     Error: 'Internal Server error',
