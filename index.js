@@ -9,14 +9,7 @@ module.exports = function(app, optionsToMerge) {
             const user = await new Promise((resolve, reject) => {
                 app.models.AccessToken.findForRequest(req, {}, (error, accesstoken) => {
                     if (error) return reject(error);
-
-                    if (accesstoken === undefined) {
-                        res.status(401);
-                        return res.send({
-                            Error: 'Unauthorized',
-                            Message: 'You need to be authenticated to access this endpoint',
-                        });
-                    }
+                    if (accesstoken === undefined) return reject(401);
 
                     return resolve(app.models.User.findById(accesstoken.userId));
                 });
@@ -35,10 +28,18 @@ module.exports = function(app, optionsToMerge) {
         } catch (error) {
             console.error(error);
 
-            res.status(500);
-            res.send({
-                Error: 'Internal Server error',
-            });
+            if (error === 401) {
+                res.status(401);
+                res.send({
+                    Error: 'Unauthorized',
+                    Message: 'You need to be authenticated to access this endpoint',
+                });
+            } else {
+                res.status(500);
+                res.send({
+                    Error: 'Internal Server error',
+                });
+            }
         }
     });
 };
