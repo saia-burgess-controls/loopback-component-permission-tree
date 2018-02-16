@@ -32,7 +32,7 @@
   "homepage": "https://github.com/joinbox/loopback-component-permission-tree#readme",
   "dependencies": {
     "loopback": "^3.17.1",
-    "loopback-microservice": "git://github.com/joinbox/loopback-microservice.git#initial-setup"
+    "loopback-microservice": "^0.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
