@@ -95,9 +95,9 @@ module.exports = class PermissionTree {
                             remoteMethod,
                             accessType,
                             (err, accessRequest) => {
-                                if (err) reject(err);
+                                if (err) return reject(err);
 
-                                resolve(accessRequest);
+                                return resolve(accessRequest);
                             },
                         );
                     }));
@@ -154,8 +154,6 @@ module.exports = class PermissionTree {
         const userTree = this.getUserPermissionTree(user);
 
         userTree[accessRequest.model][accessRequest.property][accessRequest.accessType] = allow;
-
-        this.setUserPermissionTree(user, userTree);
     }
 
     async getPermissionsForUser(user) {

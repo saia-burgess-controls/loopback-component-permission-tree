@@ -8,19 +8,17 @@ module.exports = function(app, optionsToMerge) {
         try {
             const user = await new Promise((resolve, reject) => {
                 app.models.AccessToken.findForRequest(req, {}, (error, accesstoken) => {
-                    if (error) reject(error);
+                    if (error) return reject(error);
 
                     if (accesstoken === undefined) {
                         res.status(401);
-                        res.send({
+                        return res.send({
                             Error: 'Unauthorized',
                             Message: 'You need to be authenticated to access this endpoint',
                         });
-
-                        return;
                     }
 
-                    resolve(app.models.User.findById(accesstoken.userId));
+                    return resolve(app.models.User.findById(accesstoken.userId));
                 });
             });
             user.userGroups = await app.models.Role.getRoles({
