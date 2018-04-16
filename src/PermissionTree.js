@@ -1,5 +1,5 @@
 /**
- * PermissionTree class builds and handels the permission tree
+ * PermissionTree class builds and handles the permission tree
  * for the given models and methods
  */
 module.exports = class PermissionTree {
@@ -128,19 +128,11 @@ module.exports = class PermissionTree {
 
     updatePermissions(user, accessRequests) {
         accessRequests.forEach((accessRequest) => {
-            if (
-                !this.getPermission(
-                    user,
-                    accessRequest
-                ) &&
-                accessRequest.isAllowed()
-            ) {
-                this.setPermission(
-                    user,
-                    accessRequest,
-                    true
-                );
-            }
+            this.setPermission(
+                user,
+                accessRequest,
+                accessRequest.isAllowed(),
+            );
         });
     }
 
@@ -150,10 +142,11 @@ module.exports = class PermissionTree {
         return userTree[accessRequest.model][accessRequest.property][accessRequest.accessType];
     }
 
-    setPermission(user, accessRequest, allow = true) {
+    setPermission(user, accessRequest, allow = false) {
         const userTree = this.getUserPermissionTree(user);
-
         userTree[accessRequest.model][accessRequest.property][accessRequest.accessType] = allow;
+
+        return this.setUserPermissionTree(user, userTree);
     }
 
     async getPermissionsForUser(user) {

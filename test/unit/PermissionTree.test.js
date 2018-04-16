@@ -52,7 +52,8 @@ describe('PermissionTree Unit Test', () => {
                 model: 'Author',
                 property: 'create',
                 accessType: 'READ',
-            }
+            },
+            true,
         );
         const permissionTree =  this.permissionTree.getUserPermissionTree({ id: 1 });
 

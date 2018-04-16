@@ -12,8 +12,8 @@ class DataCreator {
 
     async createAndLinkData() {
         const roles = await this.createRoles();
-        const acls = await this.createAcls();
         const users = await this.createUsers();
+        const acls = await this.createAcls();
 
         return Promise.all(roles.map((role, index) => {
             return role.principals.create({

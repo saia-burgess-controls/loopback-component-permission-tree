@@ -26,8 +26,6 @@ module.exports = function(app, optionsToMerge) {
                 .send(userPermissions);
 
         } catch (error) {
-            console.error(error);
-
             if (error === 401) {
                 res.status(401);
                 res.send({
