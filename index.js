@@ -14,9 +14,16 @@ module.exports = function(app, optionsToMerge) {
                     return resolve(app.models.User.findById(accesstoken.userId));
                 });
             });
+
+            // The id property form mongo db gets converted to NaN when loaded
+            // over the rest-connector. To prevent this the id can be explicitly
+            // set to 'string' this only works if the model is public.
+            // Since we can not make the extended user model public on 
+            // microservices due to name conflicts this fallback is needed.
+            const userId = user.id !== 'NaN' ? user.id : user.userId;
             user.userGroups = await app.models.Role.getRoles({
                 principalType: app.models.RoleMapping.USER,
-                principalId: user.id,
+                principalId: userId,
             });
 
             const userPermissions = await permissionTree.getPermissionsForUser(user);
