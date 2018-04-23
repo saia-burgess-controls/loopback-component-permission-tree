@@ -20,7 +20,7 @@ module.exports = function(app, optionsToMerge) {
             // set to 'string' this only works if the model is public.
             // Since we can not make the extended user model public on 
             // microservices due to name conflicts this fallback is needed.
-            const userId = user.id !== 'NaN' ? user.id : user.userId;
+            const userId = !isNaN(user.id) ? user.id : user.userId;
             user.userGroups = await app.models.Role.getRoles({
                 principalType: app.models.RoleMapping.USER,
                 principalId: userId,
