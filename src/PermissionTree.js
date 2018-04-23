@@ -61,13 +61,16 @@ module.exports = class PermissionTree {
         return this._buildDefaultTree();
     }
 
+    hasUserPermissionTree(user) {
+        return this.userPermissionTrees.has(user.id)
+    }
 
     getUserPermissionTree(user) {
         if (!user) {
             throw new Error('No user was specified while trying to access the users permission tree!');
         }
 
-        if (!this.userPermissionTrees.has(user.id)) {
+        if (!this.hasUserPermissionTree(user)) {
             // Deep clone
             this.setUserPermissionTree(user, JSON.parse(JSON.stringify(this.getDefaultTree())));
         }
@@ -116,6 +119,11 @@ module.exports = class PermissionTree {
     async createPermissionTree(user) {
         if (!user || !user.userGroups) {
             throw new Error('No user was specified while trying to load permission tree!');
+        }
+
+        if (this.hasUserPermissionTree(user)) {
+            // do not rebuild the tree if it already exists
+            return; 
         }
 
         // Note: Roles are passed as user groups (RoleMapping.GROUP)
