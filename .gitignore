@@ -1,3 +1,6 @@
+#Project specific
+diskcache
+
 # Logs
 logs
 *.log

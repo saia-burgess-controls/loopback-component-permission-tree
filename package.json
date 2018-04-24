@@ -1,6 +1,6 @@
 {
   "name": "@joinbox/loopback-component-permission-tree",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Creates a custom endpoint and returns the current users permissions",
   "main": "index.js",
   "scripts": {
@@ -31,8 +31,9 @@
   },
   "homepage": "https://github.com/joinbox/loopback-component-permission-tree#readme",
   "dependencies": {
-    "loopback": "^3.17.1",
-    "@joinbox/loopback-microservice": "^0.1.0"
+    "@joinbox/loopback-microservice": "^0.1.0",
+    "cache-manager-fs": "^1.0.6",
+    "loopback": "^3.17.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

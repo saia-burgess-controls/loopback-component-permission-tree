@@ -1,8 +1,8 @@
 const PermissionTree = require('./src/PermissionTree');
 
 module.exports = function(app, optionsToMerge) {
-    const options = Object.assign({ mountPath: '/getUserPermissionTree' }, optionsToMerge);
-    const permissionTree = new PermissionTree(app.models, app.remotes());
+    const options = Object.assign({ mountPath: '/getUserPermissionTree', enableCache: true }, optionsToMerge);
+    const permissionTree = new PermissionTree(app.models, app.remotes(), options);
 
     app.get(options.mountPath, async(req, res) => {
         try {

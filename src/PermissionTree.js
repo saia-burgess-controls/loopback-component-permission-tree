@@ -1,9 +1,12 @@
+const cacheManager = require('cache-manager');
+const fsStore = require('cache-manager-fs');
+
 /**
  * PermissionTree class builds and handles the permission tree
  * for the given models and methods
  */
 module.exports = class PermissionTree {
-    constructor(models, remotes) {
+    constructor(models, remotes, options) {
         /**
          * Loopback data models
          * @type {Array}
@@ -28,6 +31,34 @@ module.exports = class PermissionTree {
          * @type {Object}
          */
         this.userPermissionTrees = new Map();
+
+        /**
+         * Component options
+         * 
+         * @type {object}
+         */
+        this.options = options || {};
+
+
+        console.log('options', options)
+
+        if (this.options.enableCache) {
+            const cacheOptions = {
+                ttl: 24*60*60 /* seconds */, 
+                maxsize: 1000*1000*1000 /* max size in bytes on disk */, 
+                path:'diskcache', 
+                preventfill:true
+            }
+            this.diskCache = cacheManager.caching({store: fsStore, options: cacheOptions});
+
+            this.diskCache.get('userPermissionTrees', (err, result) => {
+                if (err) throw err;
+
+                console.log(result);
+                this.userPermissionTrees = result ? new Map(JSON.parse(result)) : this.userPermissionTrees;
+            });
+
+        }
     }
 
     _buildDefaultTree() {
@@ -80,7 +111,13 @@ module.exports = class PermissionTree {
 
     setUserPermissionTree(user, tree) {
         this.userPermissionTrees.set(user.id, tree);
-    }
+
+        if (this.options.enableCache) {
+            this.diskCache.set('userPermissionTrees', JSON.stringify([...this.userPermissionTrees]), {}, function(err) {
+                if (err) { throw err; }
+            });
+        }
+    }   
 
 
     buildACLQueries(roleName) {
