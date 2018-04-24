@@ -37,7 +37,7 @@ describe('PermissionTree Unit Test', () => {
 
     it('setUserPermissionTree: Should save the given value', function() {
         this.permissionTree.setUserPermissionTree(
-            { id: 'setUserPermissionTreeTest' },
+            { id: NaN, userId: 'setUserPermissionTreeTest' },
             { setUserPermissionTreeTest: true }
         );
         const permissionTree =  this.permissionTree.userPermissionTrees.get('setUserPermissionTreeTest');

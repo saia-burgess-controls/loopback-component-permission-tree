@@ -39,9 +39,6 @@ module.exports = class PermissionTree {
          */
         this.options = options || {};
 
-
-        console.log('options', options)
-
         if (this.options.enableCache) {
             const cacheOptions = {
                 ttl: 24*60*60 /* seconds */, 
@@ -54,7 +51,6 @@ module.exports = class PermissionTree {
             this.diskCache.get('userPermissionTrees', (err, result) => {
                 if (err) throw err;
 
-                console.log(result);
                 this.userPermissionTrees = result ? new Map(JSON.parse(result)) : this.userPermissionTrees;
             });
 
@@ -93,7 +89,8 @@ module.exports = class PermissionTree {
     }
 
     hasUserPermissionTree(user) {
-        return this.userPermissionTrees.has(user.id)
+        const userId = !isNaN(user.id) ? user.id : user.userId;
+        return this.userPermissionTrees.has(userId);
     }
 
     getUserPermissionTree(user) {
@@ -106,16 +103,22 @@ module.exports = class PermissionTree {
             this.setUserPermissionTree(user, JSON.parse(JSON.stringify(this.getDefaultTree())));
         }
 
-        return this.userPermissionTrees.get(user.id);
+        const userId = !isNaN(user.id) ? user.id : user.userId;
+        return this.userPermissionTrees.get(userId);
     }
 
     setUserPermissionTree(user, tree) {
-        this.userPermissionTrees.set(user.id, tree);
+        const userId = !isNaN(user.id) ? user.id : user.userId;
+        this.userPermissionTrees.set(userId, tree);
 
         if (this.options.enableCache) {
-            this.diskCache.set('userPermissionTrees', JSON.stringify([...this.userPermissionTrees]), {}, function(err) {
+            this.diskCache.del('userPermissionTrees', (err) => {
                 if (err) { throw err; }
-            });
+
+                this.diskCache.set('userPermissionTrees', JSON.stringify([...this.userPermissionTrees]), {}, function(err) {
+                    if (err) { throw err; }
+                });
+            })
         }
     }   
 
